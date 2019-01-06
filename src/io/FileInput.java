@@ -2,7 +2,9 @@ package io;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileInput {
     public static List<String> read(String file) {
@@ -36,6 +38,31 @@ public class FileInput {
         return seq;
 
     }
+
+    public static Map<String,List<Integer>> read_contig(String filePath){
+        Map<String, List<Integer>> map = new HashMap<>();
+
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(filePath));
+            String str;
+            int i =0;
+
+            while ((str = in.readLine()) != null) {
+
+                map.put(str.trim(),new ArrayList<Integer>());
+
+//                System.out.println(Arrays.toString(arr));
+                i +=1;
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+
+    }
+
+
     public static File[] getFiles(String path) {
         File file = new File(path);
         File[] files = new File[0];

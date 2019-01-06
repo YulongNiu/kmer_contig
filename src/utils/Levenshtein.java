@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.List;
+
 public class Levenshtein {
 
     public static int distance(String a, String b) {
@@ -23,7 +25,7 @@ public class Levenshtein {
     }
 
     public static void main(String [] args) {
-        String [] data = { "kitten", "sitting", "saturday", "sunday", "MCTCMMVF", "CMVCEIFMMFMMMMMMMMMMM" };
+        String [] data = { "kitten", "sitting", "saturday", "sunday", "MCTMTT", "MCCMTF" };
         for (int i = 0; i < data.length; i += 2)
             System.out.println("distance(" + data[i] + ", " + data[i+1] + ") = " + distance(data[i], data[i+1]));
     }
