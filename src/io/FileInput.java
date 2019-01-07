@@ -1,10 +1,7 @@
 package io;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FileInput {
     public static List<String> read(String file) {
@@ -39,7 +36,7 @@ public class FileInput {
 
     }
 
-    public static Map<String,List<Integer>> read_contig(String filePath){
+    public static Map<String,List<Integer>> readContig(String filePath){
         Map<String, List<Integer>> map = new HashMap<>();
 
         try {
@@ -71,5 +68,34 @@ public class FileInput {
 
         }
         return files;
+    }
+
+    public static Map<String, int[]> readIndex(String path){
+        Map<String, int[]> map = new HashMap<>();
+
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(path));
+            String str;
+
+
+            while ((str = in.readLine()) != null) {
+
+                String[] tem = str.trim().split("\t");
+                String[] feature = tem[1].split(",");
+                int[] featureNum = new int[feature.length];
+//                System.out.println(feature.length);
+                for (int i = 0; i < feature.length; i++) {
+                    featureNum[i] = Integer.parseInt(feature[i]);
+                }
+//                System.out.println(tem[0]);
+//                System.out.println(Arrays.toString(featureNum));
+                map.put(tem[0],featureNum);
+//                System.out.println(Arrays.toString(arr));
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 }

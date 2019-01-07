@@ -8,9 +8,14 @@ import java.util.*;
 public class SeqContig {
 
     private Set<String> contigs;
+    private Map<String, String> contigsMap;
 
     public Set<String> getContigs() {
         return contigs;
+    }
+
+    public Map<String, String> getContigsMap() {
+        return contigsMap;
     }
 
     public void contigTable(String speFile, int k){
@@ -30,6 +35,7 @@ public class SeqContig {
         long startTime = System.currentTimeMillis();
         foo.allContigs();
         Map<String, String> contigs = foo.getContigs();
+        this.contigsMap = contigs;
         Set<String> tem = new HashSet<>();
         for (Map.Entry<String, String> entry : contigs.entrySet()) {
             tem.add(entry.getValue());

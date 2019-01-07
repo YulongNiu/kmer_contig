@@ -16,6 +16,7 @@ public class CreateSpeciesTable {
     private String speFilePath;
     private String speContigIndexPath;
     private Map<String,List<Integer>> contigTable;
+//    private SeqContig foo;
     public CreateSpeciesTable(String contigPath,
                               String speFilePath,
                               String speContigIndexPath){
@@ -26,11 +27,10 @@ public class CreateSpeciesTable {
         if (!file.isDirectory()){
             file.mkdirs();
         }
-
-
+//        this.foo = new SeqContig();
     }
     public void readContig(String path){
-        Map<String, List<Integer>> contigTable = FileInput.read_contig(path);
+        Map<String, List<Integer>> contigTable = FileInput.readContig(path);
         this.contigTable = contigTable;
     }
 
@@ -78,15 +78,16 @@ public class CreateSpeciesTable {
 
 
     public void createSpe(int k){
-        SeqContig foo = new SeqContig();
-        File[] files = FileInput.getFiles(speFilePath);
 
+        File[] files = FileInput.getFiles(speFilePath);
+        SeqContig foo = new SeqContig();
         for (int i = 0; i < files.length; i++) {
             System.out.println(String.valueOf(i) + ": " + files[i].getName());
             foo.contigTable(files[i].getAbsolutePath(),k);
             Set<String> contigs = foo.getContigs();
 //            fuzzyMatch(contigs);
             exactMatch(contigs);
+
         }
 
 
