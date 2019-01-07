@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +32,38 @@ public class FileOutput {
         writer.close();
 
     }
+    public void writeContigSplit(Set<String> contigs,int splitNum) throws IOException {
+        File file = new File(this.fileOutputPath);
+
+        String[] tem2 = file.getName().split("\\.");
+        String name = tem2[0];
+
+
+        List<String> contigsList = new ArrayList<>();
+        List<Integer> allIndex = new ArrayList<>();
+        // trans set to list
+        for (String line:contigs){
+            contigsList.add(line);
+        }
+        int length = contigsList.size();
+        int tl = length % splitNum == 0 ? length / splitNum : (length
+                / splitNum + 1);
+        for (int i = 0; i < length ; i++) {
+            allIndex.add(i);
+        }
+        for (int i = 0; i < splitNum; i++) {
+            String w_files = file.getParent() +"/" + name + String.valueOf(i)+ ".txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(w_files));
+            int end = (i + 1) * tl;
+            final List<Integer> list1 = allIndex.subList(i * tl, end > length ? length : end);
+            for (int j:list1){
+                writer.write(contigsList.get(j)+"\n");
+            }
+            writer.close();
+        }
+
+    }
+
     private static String aryToString(List<Integer> ary){
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < ary.size(); i++){

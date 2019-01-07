@@ -19,7 +19,7 @@ public class contig {
         List<String> allSeq = new ArrayList<>();
         File[] files = FileInput.getFiles("/home/yangfang/PPFeature/kmer_profile/abb_seqs/");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 7; i++) {
             System.out.println(files[i].getName());
             allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
 

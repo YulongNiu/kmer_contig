@@ -14,13 +14,23 @@ public class CreateSpeciesTable {
 
     private String contigPath;
     private String speFilePath;
+    private String speContigIndexPath;
     private Map<String,List<Integer>> contigTable;
-    public CreateSpeciesTable(String contigPath, String speFilePath){
+    public CreateSpeciesTable(String contigPath,
+                              String speFilePath,
+                              String speContigIndexPath){
         this.contigPath = contigPath;
         this.speFilePath = speFilePath;
+        this.speContigIndexPath = speContigIndexPath;
+        File file = new File(speContigIndexPath);
+        if (!file.isDirectory()){
+            file.mkdirs();
+        }
+
+
     }
-    public void readContig(){
-        Map<String, List<Integer>> contigTable = FileInput.read_contig(this.contigPath);
+    public void readContig(String path){
+        Map<String, List<Integer>> contigTable = FileInput.read_contig(path);
         this.contigTable = contigTable;
     }
 
@@ -39,6 +49,32 @@ public class CreateSpeciesTable {
             entry.getValue().add(idx);
         }
     }
+    private void exactMatch(Set<String> contigs){
+        for (Map.Entry<String, List<Integer>> entry : this.contigTable.entrySet()) {
+            if (contigs.contains(entry.getKey())){
+                entry.getValue().add(1);
+            }else {
+                entry.getValue().add(0);
+            }
+
+        }
+
+
+
+    }
+    public void createSpeEach(int k) throws IOException {
+        File[] files = FileInput.getFiles(contigPath);
+        for (int i = 0; i < files.length; i++) {
+            System.out.println("Start " + files[i].getAbsolutePath() );
+            readContig(files[i].getAbsolutePath());
+            createSpe(k);
+            String w_path = speContigIndexPath + files[i].getName();
+            writeSpeTable(w_path);
+        }
+
+
+    }
+
 
 
     public void createSpe(int k){
@@ -46,10 +82,11 @@ public class CreateSpeciesTable {
         File[] files = FileInput.getFiles(speFilePath);
 
         for (int i = 0; i < files.length; i++) {
-
+            System.out.println(String.valueOf(i) + ": " + files[i].getName());
             foo.contigTable(files[i].getAbsolutePath(),k);
             Set<String> contigs = foo.getContigs();
-            fuzzyMatch(contigs);
+//            fuzzyMatch(contigs);
+            exactMatch(contigs);
         }
 
 
