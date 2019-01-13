@@ -13,7 +13,7 @@ public class GetFeature {
     private String indexPath;
     private String writeFeaturePath;
     private Map<String,String> contigsMap;
-    private Map<String,List<Integer>> feature;
+    private Map<String,List<Integer>> feature = new HashMap<>();
     private int k;
     public GetFeature(String seqPath,
                       String indexPath,
@@ -59,10 +59,14 @@ public class GetFeature {
         File[] files = FileInput.getFiles(this.indexPath);
         // get feature
         for (String line:contigs){
+            System.out.println("Start: " + line);
             for (int i = 0; i < files.length; i++) {
                 Map<String,int[]> eachIndex = FileInput.readIndex(files[i].getAbsolutePath());
-                if (eachIndex.containsKey(line))
+                if (eachIndex.containsKey(line)) {
+                    System.out.println("match: " + line);
                     match.add(eachIndex.get(line));
+                    break;
+                }
             }
 
         }
@@ -75,10 +79,11 @@ public class GetFeature {
                 }
             }
         }
+        System.out.println(Arrays.toString(arr));
         return arr;
     }
 
-    private List<Integer> transArrtoList(int[] arr){
+    private List<Integer> transArrToList(int[] arr){
         List<Integer> tem = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             tem.add(arr[i]);
@@ -91,11 +96,19 @@ public class GetFeature {
     public void eachContig(){
         ParserSeq seq = new ParserSeq(this.seqPath);
         for (int i = 0; i < seq.size(); i++) {
-            String seqName = seq.getDescription(i);
+            String seqName = seq.getDescription(i).substring(1);
             String seqs = seq.getSequence(i);
-            Set<String> contigs = matchContig(seqs);
+//            Set<String> contigs = matchContig(seqs);
+            Set<String> contigs = getKmers(seqs);
+            System.out.println(seqName + " contains: " + String.valueOf(contigs.size()) + " contigs");
+//            for (String con:contigs){
+//                System.out.println(con);
+//            }
+
+
             int [] match  = matchIndexTable(contigs);
-            this.feature.put(seqName,transArrtoList(match));
+            System.out.println(Arrays.toString(match));
+            this.feature.put(seqName,transArrToList(match));
         }
         
     }

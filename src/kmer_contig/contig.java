@@ -11,15 +11,15 @@ public class contig {
                 "G", "H", "I", "K", "L",
                 "M", "N", "P", "Q", "R",
                 "S", "T", "V", "W", "Y"};
-        dbg foo = new dbg(6, s);
+        dbg foo = new dbg(30, s);
 //        List<String> filelist = read("/home/yangfang/PPFeature/test2.fasta");
-        List<String> filelist = FileInput.read("/home/yangfang/PPFeature/kmer_profile/abb_seqs/aly.fasta");
+//        List<String> filelist = FileInput.read("/home/yangfang/PPFeature/kmer_profile/abb_seqs/aly.fasta");
 //        List<String> filelist = read("/home/yangfang/PPFeature/kmer_profile/test.txt");
 //        System.out.println(filelist.toString());
         List<String> allSeq = new ArrayList<>();
-        File[] files = FileInput.getFiles("/home/yangfang/PPFeature/kmer_profile/abb_seqs/");
+        File[] files = FileInput.getFiles("/home/yangfang/PPFeature/kmer_profile/abb_seqs_class/");
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println(files[i].getName());
             allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
 

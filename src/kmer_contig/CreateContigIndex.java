@@ -15,9 +15,9 @@ public class CreateContigIndex {
                 "G", "H", "I", "K", "L",
                 "M", "N", "P", "Q", "R",
                 "S", "T", "V", "W", "Y"};
-        dbg foo = new dbg(6, s);
+        dbg foo = new dbg(30, s);
         List<String> allSeq = new ArrayList<>();
-        File[] files = FileInput.getFiles("/home/yangfang/PPFeature/kmer_profile/contig_idx/abb_idx_seq/");
+        File[] files = FileInput.getFiles("/home/yangfang/PPFeature/kmer_profile/contig_idx/abb_idx_seq_K30/");
 
         for (int i = 0; i < files.length; i++) {
             System.out.println(files[i].getName());
@@ -39,8 +39,8 @@ public class CreateContigIndex {
         for (Map.Entry<String, String> entry : contigs.entrySet()) {
             tem.add(entry.getValue());
         }
-        FileOutput write = new FileOutput("/home/yangfang/PPFeature/kmer_profile/contig_idx/idx_k6.txt");
-        write.writeContigSplit(tem,10);
+        FileOutput write = new FileOutput("/home/yangfang/PPFeature/kmer_profile/contig_idx/idx_k30/idx_k30.txt");
+        write.writeContigSplit(tem,5);
         System.out.println(tem.size());
 
         long endTime = System.currentTimeMillis();
