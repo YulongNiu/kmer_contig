@@ -75,7 +75,15 @@ public class CreateSpeciesTable {
 
     }
 
+    public void createOne(int k) throws IOException {
+        File file = new File(contigPath);
+        System.out.println("Start " + file.getAbsolutePath());
+        readContig(contigPath);
+        createSpe(k);
+        String w_path = speContigIndexPath + file.getName();
+        writeSpeTable(w_path);
 
+    }
 
     public void createSpe(int k){
 

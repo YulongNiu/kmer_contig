@@ -1,38 +1,28 @@
-package kmer_contig;
+package test;
 
 import io.FileInput;
-import io.FileOutput;
+import kmer_contig.dbg;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
-public class CreateContigIndex {
-    private String spePath;
-    private String outFilePath;
-    private int k;
-    private int splitNum;
+public class testcompress {
 
-    public CreateContigIndex(int k,
-                             String spePath,
-                             String outFilePath,
-                             int splitNum){
-        this.k = k;
-        this.spePath = spePath;
-        this.outFilePath = outFilePath;
-        this.splitNum = splitNum;
-    }
 
-    public void create() throws IOException {
+    public static void main(String[] args) {
         String[] s = {"A", "C", "D", "E", "F",
                 "G", "H", "I", "K", "L",
                 "M", "N", "P", "Q", "R",
                 "S", "T", "V", "W", "Y"};
-        dbg foo = new dbg(k, s);
+        dbg foo = new dbg(6, s);
+//        List<String> filelist = read("/home/yangfang/PPFeature/test2.fasta");
+//        List<String> filelist = FileInput.read("/home/yangfang/PPFeature/kmer_profile/abb_seqs/aly.fasta");
+//        List<String> filelist = read("/home/yangfang/PPFeature/kmer_profile/test.txt");
+//        System.out.println(filelist.toString());
         List<String> allSeq = new ArrayList<>();
-        File[] files = FileInput.getFiles(spePath);
+        File[] files = FileInput.getFiles("/home/yangfang/PPFeature/kmer_profile/abb_seqs500/");
 
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; i < 1; i++) {
             System.out.println(files[i].getName());
             allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
 
@@ -43,8 +33,7 @@ public class CreateContigIndex {
         }
         Set<String> kmers = foo.getKmerSet();
 
-        System.out.println("Kmers: "+ String.valueOf(kmers.size()));
-
+        System.out.println(kmers.size());
         long startTime = System.currentTimeMillis();
         foo.allContigs();
         Map<String, String> contigs = foo.getContigs();
@@ -52,15 +41,11 @@ public class CreateContigIndex {
         for (Map.Entry<String, String> entry : contigs.entrySet()) {
             tem.add(entry.getValue());
         }
-        FileOutput write = new FileOutput(outFilePath);
-        write.writeContigSplit(tem,splitNum);
-        System.out.println("Contigs: " + String.valueOf(tem.size()));
-
+        System.out.println(tem.size());
         long endTime = System.currentTimeMillis();
 
 //        foo.printContigs();
         System.out.println("Time:" + (endTime - startTime) / 1000);
-
-
     }
+
 }
