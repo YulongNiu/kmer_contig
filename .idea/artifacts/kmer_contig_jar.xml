@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="kmer_contig:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/kmer_contig_jar</output-path>
+    <root id="root">
+      <element id="archive" name="kmer_contig.jar">
+        <element id="module-output" name="kmer_contig" />
+      </element>
+    </root>
+  </artifact>
+</component>

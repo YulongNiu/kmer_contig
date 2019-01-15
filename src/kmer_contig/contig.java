@@ -25,19 +25,19 @@ public class contig {
         }
         Set<String> kmers = foo.getKmerSet();
 
-        System.out.println("Kmers:"+ String.valueOf(kmers.size()));
-        long startTime = System.currentTimeMillis();
+        System.out.print(String.valueOf(kmers.size())+",");
+//        long startTime = System.currentTimeMillis();
         foo.allContigs();
         Map<String, String> contigs = foo.getContigs();
         Set<String> tem = new HashSet<>();
         for (Map.Entry<String, String> entry : contigs.entrySet()) {
             tem.add(entry.getValue());
         }
-        System.out.println("Contigs:" + String.valueOf(tem.size()));
-        long endTime = System.currentTimeMillis();
+        System.out.println(String.valueOf(tem.size()));
+//        long endTime = System.currentTimeMillis();
 
 //        foo.printContigs();
-        System.out.println("Time:" + (endTime - startTime) / 1000);
+//        System.out.println("Time:" + (endTime - startTime) / 1000);
 
 
     }
@@ -46,9 +46,11 @@ public class contig {
     public void printCompress(){
         File[] files = FileInput.getFiles(spePath);
         for (int i = 1; i <= maxIter; i++) {
+            System.out.print(String.valueOf(i)+",");
             List<String> allSeq = new ArrayList<>();
             for (int j = 0; j < i; j++) {
-                System.out.println(files[j].getName());
+//                System.out.println(files[j].getName());
+
                 allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
             }
             searchContigs(allSeq);

@@ -1,0 +1,34 @@
+import kmer_contig.CreateContigIndex;
+
+import java.io.IOException;
+
+public class Index {
+    public static boolean run(String[] args) throws IOException {
+        int argIdx = 0;
+        String spePath = null;
+        String outPath = null;
+        int k = 1;
+        int splitNum=1;
+
+        while (argIdx < args.length && args[argIdx].startsWith("-")) {
+            String arg = args[argIdx++];
+            if (arg.equals("-i"))
+                spePath = args[argIdx++];
+            else if (arg.equals("-o"))
+                outPath = args[argIdx++];
+            else if (arg.equals("-k"))
+                k = Integer.parseInt(args[argIdx++]);
+            else if (arg.equals("-s"))
+                splitNum = Integer.parseInt(args[argIdx++]);
+            else {
+                System.err.println("Unknown option: " + arg);
+            }
+        }
+        CreateContigIndex foo = new CreateContigIndex(k,
+                spePath,
+                outPath,
+                splitNum);
+        foo.create();
+        return true;
+    }
+}
