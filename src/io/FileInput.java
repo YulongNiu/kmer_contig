@@ -81,7 +81,9 @@ public class FileInput {
             while ((str = in.readLine()) != null) {
 
                 String[] tem = str.trim().split("\t");
+
                 String[] feature = tem[1].split(",");
+
                 int[] featureNum = new int[feature.length];
 //                System.out.println(feature.length);
                 for (int i = 0; i < feature.length; i++) {

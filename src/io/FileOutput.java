@@ -34,6 +34,10 @@ public class FileOutput {
     }
     public void writeContigSplit(Set<String> contigs,int splitNum) throws IOException {
         File file = new File(this.fileOutputPath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+
+        }
 
         String[] tem2 = file.getName().split("\\.");
         String name = tem2[0];
@@ -77,6 +81,10 @@ public class FileOutput {
 
     public void writeSpeTable(Map<String,List<Integer>> speTable) throws IOException {
         File file = new File(this.fileOutputPath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+
+        }
         if (!file.isFile()) {
             file.createNewFile();
 
@@ -85,7 +93,7 @@ public class FileOutput {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileOutputPath));
 
         for (Map.Entry<String,List<Integer>> entry: speTable.entrySet()){
-            writer.write(entry.getKey()+"," + aryToString(entry.getValue()) +"\n");
+            writer.write(entry.getKey()+"\t" + aryToString(entry.getValue()) +"\n");
 
         }
         writer.close();
