@@ -1,15 +1,14 @@
-import kmer_contig.CreateContigIndex;
+import kmer_contig.GetFeature;
 
 import java.io.IOException;
 
-public class Index {
-    public static boolean run(String[] args) throws IOException {
+public class Feature {
+    public static boolean run(String[] args) throws IOException, IOException {
         int argIdx = 0;
         String spePath = null;
         String outPath = null;
+        String profile = null;
         int k = 1;
-        int splitNum=1;
-        int max=1;
 
         while (argIdx < args.length && args[argIdx].startsWith("-")) {
             String arg = args[argIdx++];
@@ -19,20 +18,19 @@ public class Index {
                 outPath = args[argIdx++];
             else if (arg.equals("-k"))
                 k = Integer.parseInt(args[argIdx++]);
-            else if (arg.equals("-m"))
-                max = Integer.parseInt(args[argIdx++]);
-            else if (arg.equals("-s"))
-                splitNum = Integer.parseInt(args[argIdx++]);
+            else if (arg.equals("-p"))
+                profile = args[argIdx++];
             else {
                 System.err.println("Unknown option: " + arg);
             }
         }
-        CreateContigIndex foo = new CreateContigIndex(k,
-                spePath,
+        GetFeature foo = new GetFeature(spePath,
+                profile,
                 outPath,
-                splitNum,
-                max);
-        foo.create();
+                k);
+        foo.createContig();
+        foo.eachContig();
+        foo.writeFeature();
         return true;
     }
 }

@@ -11,16 +11,19 @@ public class CreateContigIndex {
     private String spePath;
     private String outFilePath;
     private int k;
+    private int max;
     private int splitNum;
 
     public CreateContigIndex(int k,
                              String spePath,
                              String outFilePath,
-                             int splitNum){
+                             int splitNum,
+                             int max){
         this.k = k;
         this.spePath = spePath;
         this.outFilePath = outFilePath;
         this.splitNum = splitNum;
+        this.max = max;
     }
 
     public void create() throws IOException {
@@ -32,7 +35,7 @@ public class CreateContigIndex {
         List<String> allSeq = new ArrayList<>();
         File[] files = FileInput.getFiles(spePath);
 
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; i < max; i++) {
             System.out.println(files[i].getName());
             allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
 

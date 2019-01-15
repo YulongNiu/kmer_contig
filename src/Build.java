@@ -20,6 +20,11 @@ public class Build {
             {
                 if(Index.run(restOfArgs))
                     showUsage=false;
+            }
+            else if(mode.equals("Feature"))
+            {
+                if(Feature.run(restOfArgs))
+                    showUsage=false;
             }else if(mode.equals("Profile"))
                 if(Profile.run(restOfArgs))
                     showUsage=false;
@@ -30,9 +35,11 @@ public class Build {
             System.err.println("Usage: ");
             System.err.println("       Compress [-i <Species path>] [-k <Integer>] [-m <Max iteration>]...");
             System.err.println("   or: ");
-            System.err.println("       Index [-i <Species path>] [-k <Integer>] [-s <The Number of Split file>] [-o <Output file Name>]...");
+            System.err.println("       Index [-i <Species path>] [-k <Integer>] [-m <Max species>] [-s <The Number of Split file>] [-o <Output file Name>]...");
             System.err.println("   or: ");
             System.err.println("       Profile [-i <Species path>] [-k <Integer>] [-c <Contig index path>] [-o <Output profile path>]...");
+            System.err.println("   or: ");
+            System.err.println("       Feature [-i <Species path>] [-k <Integer>] [-p <profile file>] [-o <Output feature file>]...");
             System.exit(1);
         }
     }

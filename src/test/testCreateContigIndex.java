@@ -9,7 +9,8 @@ public class testCreateContigIndex {
         CreateContigIndex foo = new CreateContigIndex(3,
                 "/home/yangfang/PPFeature/kmer_profile/test_create/",
                 "/home/yangfang/PPFeature/kmer_profile/out/idx3.txt",
-                3);
+                3,
+                6);
         foo.create();
     }
 }

@@ -24,7 +24,6 @@ public class contig {
             foo.getKmer(tem);
         }
         Set<String> kmers = foo.getKmerSet();
-
         System.out.print(String.valueOf(kmers.size())+",");
 //        long startTime = System.currentTimeMillis();
         foo.allContigs();
@@ -48,11 +47,12 @@ public class contig {
         for (int i = 1; i <= maxIter; i++) {
             System.out.print(String.valueOf(i)+",");
             List<String> allSeq = new ArrayList<>();
+//            System.out.println(allSeq.size());
             for (int j = 0; j < i; j++) {
 //                System.out.println(files[j].getName());
-
-                allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
+                allSeq.addAll(FileInput.read(files[j].getAbsolutePath()));
             }
+//            System.out.println(allSeq.size());
             searchContigs(allSeq);
         }
 

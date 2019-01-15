@@ -14,6 +14,7 @@ public class GetFeature {
     private String writeFeaturePath;
     private Map<String,String> contigsMap;
     private Map<String,List<Integer>> feature = new HashMap<>();
+    private Map<String,int[]> eachIndex;
     private int k;
     public GetFeature(String seqPath,
                       String indexPath,
@@ -23,6 +24,9 @@ public class GetFeature {
         this.indexPath = indexPath;
         this.writeFeaturePath = writeFeaturePath;
         this.k = k;
+        File file = new File(this.indexPath);
+        this.eachIndex = FileInput.readIndex(file.getAbsolutePath());
+
     }
 
     public Set<String> getKmers(String seq) {
@@ -56,19 +60,15 @@ public class GetFeature {
     public int[] matchIndexTable(Set<String> contigs){
         int[] arr = new int[72];
         List<int[]> match = new ArrayList<>();
-        File[] files = FileInput.getFiles(this.indexPath);
+//        File[] files = FileInput.getFiles(this.indexPath);
+
         // get feature
         for (String line:contigs){
             System.out.println("Start: " + line);
-            for (int i = 0; i < files.length; i++) {
-                Map<String,int[]> eachIndex = FileInput.readIndex(files[i].getAbsolutePath());
-                if (eachIndex.containsKey(line)) {
-                    System.out.println("match: " + line);
-                    match.add(eachIndex.get(line));
-                    break;
-                }
+            if (eachIndex.containsKey(line)) {
+                System.out.println("match: " + line);
+                match.add(eachIndex.get(line));
             }
-
         }
         // combine feature
         if (!match.isEmpty()){

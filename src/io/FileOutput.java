@@ -85,7 +85,7 @@ public class FileOutput {
         BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileOutputPath));
 
         for (Map.Entry<String,List<Integer>> entry: speTable.entrySet()){
-            writer.write(entry.getKey()+"\t" + aryToString(entry.getValue()) +"\n");
+            writer.write(entry.getKey()+"," + aryToString(entry.getValue()) +"\n");
 
         }
         writer.close();
