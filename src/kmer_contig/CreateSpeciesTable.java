@@ -62,7 +62,7 @@ public class CreateSpeciesTable {
 
 
     }
-    public void createSpeEach(int k) throws IOException {
+    public void createSpeEach(int k,int w) throws IOException {
         File[] files = FileInput.getFiles(contigPath);
         for (int i = 0; i < files.length; i++) {
             System.out.println("Start " + files[i].getAbsolutePath() );

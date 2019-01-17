@@ -9,6 +9,7 @@ public class Profile {
         String contigPath = null;
         String outProfile = null;
         int k = 1;
+        int a = 0;
 
 
         while (argIdx < args.length && args[argIdx].startsWith("-")) {
@@ -21,6 +22,8 @@ public class Profile {
                 outProfile = args[argIdx++];
             else if (arg.equals("-k"))
                 k = Integer.parseInt(args[argIdx++]);
+            else if (arg.equals("-a"))
+                a = Integer.parseInt(args[argIdx++]);
             else {
                 System.err.println("Unknown option: " + arg);
             }
@@ -28,7 +31,7 @@ public class Profile {
         CreateSpeciesTable foo = new CreateSpeciesTable(contigPath,
                 spePath,
                 outProfile);
-        foo.createSpeEach(k);
+        foo.createSpeEach(k,a);
         return true;
     }
 }

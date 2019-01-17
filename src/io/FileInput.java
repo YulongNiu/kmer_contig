@@ -4,6 +4,10 @@ import java.io.*;
 import java.util.*;
 
 public class FileInput {
+    private int FeatureSize;
+
+
+
     public static List<String> read(String file) {
         List seq = new ArrayList();
         try {
@@ -93,6 +97,7 @@ public class FileInput {
 //                System.out.println(Arrays.toString(featureNum));
                 map.put(tem[0],featureNum);
 //                System.out.println(Arrays.toString(arr));
+
             }
             in.close();
         } catch (IOException e) {

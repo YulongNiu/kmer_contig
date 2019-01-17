@@ -11,7 +11,7 @@ public class testGetFeature {
                 "/home/yangfang/PPFeature/kmer_profile/contig_idx/seq/Gor2_k6_test__.txt",
                 6);
         foo.createContig();
-        foo.eachContig();
+        foo.eachContig(0);
 //        foo.writeFeature();
     }
 }

@@ -79,6 +79,16 @@ public class FileOutput {
         return sb.toString();
     }
 
+    private static String aryToString2(List<Float> ary){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < ary.size(); i++){
+            sb.append(ary.get(i)).append(",");
+        }
+
+        sb.deleteCharAt(sb.length() -1);
+
+        return sb.toString();
+    }
     public void writeSpeTable(Map<String,List<Integer>> speTable) throws IOException {
         File file = new File(this.fileOutputPath);
         if (!file.getParentFile().exists()) {
@@ -94,6 +104,25 @@ public class FileOutput {
 
         for (Map.Entry<String,List<Integer>> entry: speTable.entrySet()){
             writer.write(entry.getKey()+"\t" + aryToString(entry.getValue()) +"\n");
+
+        }
+        writer.close();
+    }
+    public void writeSpeTableContinue(Map<String,List<Float>> speTable) throws IOException {
+        File file = new File(this.fileOutputPath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+
+        }
+        if (!file.isFile()) {
+            file.createNewFile();
+
+        }
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileOutputPath));
+
+        for (Map.Entry<String,List<Float>> entry: speTable.entrySet()){
+            writer.write(entry.getKey()+"\t" + aryToString2(entry.getValue()) +"\n");
 
         }
         writer.close();

@@ -11,7 +11,8 @@ public class testFileInput {
 //            System.out.println(tem.getAbsolutePath());
 //        }
 
-        FileInput.readIndex("/home/yangfang/PPFeature/kmer_profile/contig_idx/test.txt");
+        FileInput input = new FileInput();
+        input.readIndex("/home/yangfang/PPFeature/kmer_profile/contig_idx/test.txt");
 
 
 

@@ -9,6 +9,7 @@ public class Feature {
         String outPath = null;
         String profile = null;
         int k = 1;
+        int w =0;
 
         while (argIdx < args.length && args[argIdx].startsWith("-")) {
             String arg = args[argIdx++];
@@ -18,6 +19,8 @@ public class Feature {
                 outPath = args[argIdx++];
             else if (arg.equals("-k"))
                 k = Integer.parseInt(args[argIdx++]);
+            else if (arg.equals("-w"))
+                w = Integer.parseInt(args[argIdx++]);
             else if (arg.equals("-p"))
                 profile = args[argIdx++];
             else {
@@ -29,8 +32,7 @@ public class Feature {
                 outPath,
                 k);
         foo.createContig();
-        foo.eachContig();
-        foo.writeFeature();
+        foo.eachContig(w);
         return true;
     }
 }

@@ -14,8 +14,11 @@ public class GetFeature {
     private String writeFeaturePath;
     private Map<String,String> contigsMap;
     private Map<String,List<Integer>> feature = new HashMap<>();
+    private Map<String,List<Float>> featureNor = new HashMap<>();
     private Map<String,int[]> eachIndex;
     private int k;
+    private int featureSize;
+
     public GetFeature(String seqPath,
                       String indexPath,
                       String writeFeaturePath,
@@ -26,6 +29,11 @@ public class GetFeature {
         this.k = k;
         File file = new File(this.indexPath);
         this.eachIndex = FileInput.readIndex(file.getAbsolutePath());
+        for (Map.Entry<String, int[]> entry : eachIndex.entrySet()) {
+            int[] tem = entry.getValue();
+            this.featureSize = tem.length;
+            break;
+        }
 
     }
 
@@ -58,7 +66,7 @@ public class GetFeature {
     }
 
     public int[] matchIndexTable(Set<String> contigs){
-        int[] arr = new int[72];
+        int[] arr = new int[this.featureSize];
         List<int[]> match = new ArrayList<>();
 //        File[] files = FileInput.getFiles(this.indexPath);
 
@@ -79,11 +87,49 @@ public class GetFeature {
                 }
             }
         }
+
         System.out.println(Arrays.toString(arr));
         return arr;
     }
 
-    private List<Integer> transArrToList(int[] arr){
+    public float[] matchIndexTableFloat(Set<String> contigs){
+        int count =0;
+        int[] arr = new int[this.featureSize];
+        List<int[]> match = new ArrayList<>();
+//        File[] files = FileInput.getFiles(this.indexPath);
+
+        // get feature
+        for (String line:contigs){
+            System.out.println("Start: " + line);
+            if (eachIndex.containsKey(line)) {
+                System.out.println("match: " + line);
+                match.add(eachIndex.get(line));
+
+                count +=1;
+            }
+        }
+        // combine feature
+        if (!match.isEmpty()){
+            for (int[] x:match){
+                for (int i = 0; i < x.length; i++) {
+                    arr[i] = arr[i] + x[i];
+
+                }
+            }
+        }
+        //normal
+        float weight = (float) count / contigs.size();
+        float [] nor = new float[arr.length];
+        for (int j = 0; j < arr.length; j++) {
+            nor[j] = (float) arr[j] * weight;
+        }
+
+
+
+        System.out.println(Arrays.toString(arr));
+        return nor;
+    }
+    private List<Integer> transArrToListInt(int[] arr){
         List<Integer> tem = new ArrayList<>();
         for (int i = 0; i < arr.length; i++) {
             tem.add(arr[i]);
@@ -91,9 +137,16 @@ public class GetFeature {
         }
         return tem;
     }
+    private List<Float> transArrToListFloat(float[] arr){
+        List<Float> tem = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            tem.add(arr[i]);
 
+        }
+        return tem;
+    }
 
-    public void eachContig(){
+    public void eachContig(int w) throws IOException {
         ParserSeq seq = new ParserSeq(this.seqPath);
         for (int i = 0; i < seq.size(); i++) {
             String seqName = seq.getDescription(i).substring(1);
@@ -105,14 +158,34 @@ public class GetFeature {
 //                System.out.println(con);
 //            }
 
+            if (w == 1) {
+                float[] match = matchIndexTableFloat(contigs);
 
-            int [] match  = matchIndexTable(contigs);
-            System.out.println(Arrays.toString(match));
-            this.feature.put(seqName,transArrToList(match));
+                this.featureNor.put(seqName, transArrToListFloat(match));
+                System.out.println(Arrays.toString(match));
+            } else {
+                int[] match = matchIndexTable(contigs);
+                this.feature.put(seqName,transArrToListInt(match));
+                System.out.println(Arrays.toString(match));
+            }
+
+
+//            this.feature.put(seqName,transArrToList(match));
+        }
+        if (w==1){
+            writeFeatureContinue();
+        }else {
+            writeFeature();
         }
         
     }
-    
+
+    public void writeFeatureContinue() throws IOException {
+        FileOutput out = new FileOutput(this.writeFeaturePath);
+        out.writeSpeTableContinue(this.featureNor);
+    }
+
+
     public void writeFeature() throws IOException {
         FileOutput out = new FileOutput(this.writeFeaturePath);
         out.writeSpeTable(this.feature);
