@@ -15,6 +15,6 @@ public class testCreateSpeciesTable {
         CreateSpeciesTable foo = new CreateSpeciesTable("/home/yangfang/PPFeature/kmer_profile/contig_idx/idx_k30/",
                 "/home/yangfang/PPFeature/kmer_profile/abb_seqs_class/",
                 "/home/yangfang/PPFeature/kmer_profile/contig_idx/72speIdx_k30/");
-        foo.createSpeEach(30,0);
+//        foo.createSpeEach(30,0);
     }
 }

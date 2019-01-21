@@ -48,7 +48,7 @@ public class GetFeature {
     }
 
     public void createContig(){
-        SeqContig foo = new SeqContig();
+        SeqContig foo = new SeqContig(k);
         foo.contigTable(this.seqPath,k);
         this.contigsMap = foo.getContigsMap();
     }

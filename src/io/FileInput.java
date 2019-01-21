@@ -1,5 +1,7 @@
 package io;
 
+import fuzzyHash.FuzzyHashMap;
+
 import java.io.*;
 import java.util.*;
 
@@ -42,6 +44,30 @@ public class FileInput {
 
     public static Map<String,List<Integer>> readContig(String filePath){
         Map<String, List<Integer>> map = new HashMap<>();
+
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(filePath));
+            String str;
+            int i =0;
+
+            while ((str = in.readLine()) != null) {
+
+                map.put(str.trim(),new ArrayList<Integer>());
+
+//                System.out.println(Arrays.toString(arr));
+                i +=1;
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+
+    }
+
+    public static FuzzyHashMap readContigFuzzy(String filePath){
+        FuzzyHashMap map = new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.FIRST_4,FuzzyHashMap.FUZZY_MATCHING_ALGORITHM.LEVENSHTEIN);
+
 
         try {
             BufferedReader in = new BufferedReader(new FileReader(filePath));

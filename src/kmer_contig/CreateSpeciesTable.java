@@ -1,5 +1,6 @@
 package kmer_contig;
 
+import fuzzyHash.FuzzyHashMap;
 import io.FileInput;
 import io.FileOutput;
 import utils.Levenshtein;
@@ -17,6 +18,7 @@ public class CreateSpeciesTable {
     private String speFilePath;
     private String speContigIndexPath;
     private Map<String, List<Integer>> contigTable;
+    private FuzzyHashMap contigTableFuzzy;
     private List<String> speName = new ArrayList<>();
 
     //    private SeqContig foo;
@@ -38,19 +40,18 @@ public class CreateSpeciesTable {
         this.contigTable = contigTable;
     }
 
-    private void fuzzyMatch(Set<String> contigs,int f) {
-        for (Map.Entry<String, List<Integer>> entry : this.contigTable.entrySet()) {
-            int idx = 0;
-            for (String eachContig : contigs) {
-                int fuzzyScore = Levenshtein.distance(entry.getKey(), eachContig);
+    public void readContigFuzzy(String path){
+        FuzzyHashMap contigTable = FileInput.readContigFuzzy(path);
+        this.contigTable = contigTable;
+    }
 
-                if (fuzzyScore <= f) {
-                    idx = 1;
-                    break;
-                }
+    private void fuzzyMatch(FuzzyHashMap contigs,int f) {
+        for (Map.Entry<String, List<Integer>> entry : this.contigTable.entrySet()) {
+            if (contigs.containsFuzzyKey(entry.getKey(),f)) {
+                entry.getValue().add(1);
+            } else {
+                entry.getValue().add(0);
             }
-//            System.out.println(idx);
-            entry.getValue().add(idx);
         }
     }
 
@@ -71,7 +72,12 @@ public class CreateSpeciesTable {
         File[] files = FileInput.getFiles(contigPath);
         for (int i = 0; i < files.length; i++) {
             System.out.println("Start " + files[i].getAbsolutePath());
-            readContig(files[i].getAbsolutePath());
+
+            if (f == 1){
+                readContigFuzzy(files[i].getAbsolutePath());
+            }else {
+                readContig(files[i].getAbsolutePath());
+            }
             createSpe(k, f);
             String w_path = speContigIndexPath + files[i].getName();
             writeSpeTable(w_path);
@@ -93,7 +99,7 @@ public class CreateSpeciesTable {
     public void createSpe(int k, int f) {
 
         File[] files = FileInput.getFiles(speFilePath);
-        SeqContig foo = new SeqContig();
+        SeqContig foo = new SeqContig(k);
         for (int i = 0; i < files.length; i++) {
             System.out.println(String.valueOf(i) + ": " + files[i].getName());
             String name = files[i].getName();
@@ -102,12 +108,14 @@ public class CreateSpeciesTable {
             this.speName.add(subName);
 
             foo.contigTable(files[i].getAbsolutePath(), k);
-            Set<String> contigs = foo.getContigs();
+
 
             if (f == 0) {
+                Set<String> contigs = foo.getContigs();
                 exactMatch(contigs);
 
             } else {
+                FuzzyHashMap contigs = foo.getContigsMapFuzzy();
                 fuzzyMatch(contigs,f);
             }
         }
