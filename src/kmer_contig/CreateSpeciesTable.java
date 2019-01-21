@@ -99,7 +99,7 @@ public class CreateSpeciesTable {
     public void createSpe(int k, int f) {
 
         File[] files = FileInput.getFiles(speFilePath);
-        SeqContig foo = new SeqContig(k);
+        SeqContig foo = new SeqContig();
         for (int i = 0; i < files.length; i++) {
             System.out.println(String.valueOf(i) + ": " + files[i].getName());
             String name = files[i].getName();
