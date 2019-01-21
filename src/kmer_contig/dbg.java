@@ -3,7 +3,7 @@ package kmer_contig;
 import java.util.*;
 
 public class dbg {
-    private Set<String> kmerSet;
+    private Set<String> kmerSet = new HashSet<>();
     private Map<String,String> contigs = new HashMap<>();
     private Set<String> done = new HashSet<>();
     private int k;
@@ -18,7 +18,6 @@ public class dbg {
     }
 
     public void getKmer(String seq) {
-        this.kmerSet = new HashSet<>();
         int len= seq.length();
         for (int i = 0; i <= len - k; i++){
             String kmer = seq.substring(i,i+k);
@@ -152,7 +151,7 @@ public class dbg {
 //            System.out.println(done.size());
             if (!done.contains(kmer)){
 
-//                System.out.println(kmer);
+                System.out.println(kmer);
 //                String kmer = "GTDHAQLQLVLQQQQPTTSDGLGVTSTSNS";
                 getContig(kmer);
                 done.add(kmer);

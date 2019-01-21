@@ -10,20 +10,7 @@ public class SeqContig {
 
     private Set<String> contigs;
     private Map<String, String> contigsMap;
-    private FuzzyHashMap contigsMapFuzzy = new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.FIRST_4, FuzzyHashMap.FUZZY_MATCHING_ALGORITHM.LEVENSHTEIN);
-    private String[] s = {"A", "C", "D", "E", "F",
-            "G", "H", "I", "K", "L",
-            "M", "N", "P", "Q", "R",
-            "S", "T", "V", "W", "Y"};
-    private int k;
-    private dbg foo;
-
-    public SeqContig(int k){
-        this.k = k;
-        dbg foo = new dbg(k, s);
-        this.foo = foo;
-    }
-
+    private FuzzyHashMap contigsMapFuzzy= new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.FIRST_4,FuzzyHashMap.FUZZY_MATCHING_ALGORITHM.LEVENSHTEIN);
     public Set<String> getContigs() {
         return contigs;
     }
@@ -36,7 +23,12 @@ public class SeqContig {
         return contigsMapFuzzy;
     }
 
-    public void contigTable(String speFile, int k) {
+    public void contigTable(String speFile, int k){
+        String[] s = {"A", "C", "D", "E", "F",
+                "G", "H", "I", "K", "L",
+                "M", "N", "P", "Q", "R",
+                "S", "T", "V", "W", "Y"};
+        dbg foo = new dbg(k, s);
 
         List<String> filelist = FileInput.read(speFile);
 
@@ -51,7 +43,7 @@ public class SeqContig {
         this.contigsMap = contigs;
         Set<String> tem = new HashSet<>();
         for (Map.Entry<String, String> entry : contigs.entrySet()) {
-            contigsMapFuzzy.putFuzzy(entry.getKey(), entry.getValue());
+            contigsMapFuzzy.putFuzzy(entry.getKey(),entry.getValue());
             tem.add(entry.getValue());
         }
         this.contigs = tem;
