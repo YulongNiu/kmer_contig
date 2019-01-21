@@ -1,5 +1,8 @@
 package io;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
+import javax.swing.text.html.HTMLDocument;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -89,6 +92,35 @@ public class FileOutput {
 
         return sb.toString();
     }
+
+    private String listWithCommon(List<String> list){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i)).append(",");
+        }
+        sb.deleteCharAt(sb.length() -1);
+        return sb.toString();
+    }
+
+    public void writeSpeName(List<String> speName) throws IOException {
+        File file = new File(this.fileOutputPath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+
+        }
+        if (!file.isFile()) {
+            file.createNewFile();
+
+        }
+        String str = listWithCommon(speName);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(this.fileOutputPath));
+        writer.write("Name"+"\t" + str);
+        writer.close();
+    }
+
+
+
     public void writeSpeTable(Map<String,List<Integer>> speTable) throws IOException {
         File file = new File(this.fileOutputPath);
         if (!file.getParentFile().exists()) {

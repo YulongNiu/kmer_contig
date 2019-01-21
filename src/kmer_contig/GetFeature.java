@@ -91,6 +91,14 @@ public class GetFeature {
         System.out.println(Arrays.toString(arr));
         return arr;
     }
+    public int sum(int[] arr){
+        int sum =0;
+        for (int i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+        return sum;
+    }
+
 
     public float[] matchIndexTableFloat(Set<String> contigs){
         int count =0;
@@ -104,8 +112,8 @@ public class GetFeature {
             if (eachIndex.containsKey(line)) {
                 System.out.println("match: " + line);
                 match.add(eachIndex.get(line));
-
-                count +=1;
+                if (sum(eachIndex.get(line)) ==0)
+                    count +=1;
             }
         }
         // combine feature
@@ -118,10 +126,10 @@ public class GetFeature {
             }
         }
         //normal
-        float weight = (float) count / contigs.size();
+        int weight = contigs.size() - count;
         float [] nor = new float[arr.length];
         for (int j = 0; j < arr.length; j++) {
-            nor[j] = (float) arr[j] * weight;
+            nor[j] = (float) arr[j] / weight;
         }
 
 
