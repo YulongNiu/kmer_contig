@@ -10,20 +10,21 @@ public class MainClass {
 		// an example of how FuzzyHashMap works
 		// here we'll use it as a phone book; 
 		// for English names the best hashing method is Soundex
-		FuzzyHashMap phoneBook = new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.FIRST_4,FuzzyHashMap.FUZZY_MATCHING_ALGORITHM.LEVENSHTEIN);
+		FuzzyHashMap phoneBook = new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.SOUNDEX);
 		//populate dictionary 
 		//for keys that have to be fuzzy search enabled "putFuzzy" method should be used to populate the map
-		phoneBook.putFuzzy("MPCMCA", new ArrayList<Integer>());
-		phoneBook.putFuzzy("MPCMCB", new ArrayList<Integer>());
-		phoneBook.putFuzzy("MPCMCC", new ArrayList<Integer>());
-		phoneBook.putFuzzy("MPCMCD", new ArrayList<Integer>());
+		phoneBook.putFuzzy("MPCMCACMCDIDCC", new ArrayList<Integer>());
+		phoneBook.putFuzzy("MPCMCBMCLDCCID", new ArrayList<Integer>());
+		phoneBook.putFuzzy("MPCMCCCDMDLCC", new ArrayList<Integer>());
+		phoneBook.putFuzzy("MPCMCDDDFEDD", new ArrayList<Integer>());
 		phoneBook.putFuzzy("MPCMCE", new ArrayList<Integer>());
 
 
 		// 1.
 		// now say we're searching for "Todd Hall", but we're miss typing it
 		// "Tod Hal"
-        List<Integer> searchedNumber = (List<Integer>) phoneBook.getFuzzy("MPCMCA", 1);
+        List<Integer> searchedNumber = (List<Integer>) phoneBook.getFuzzy("MPCMCA");
+
 		// NOTE: the search done behind is not an iteration trough all elements
 		// this should print the phone number of "Todd Hall": 834-153-5305
         searchedNumber.add(0);

@@ -151,7 +151,7 @@ public class dbg {
 //            System.out.println(done.size());
             if (!done.contains(kmer)){
 
-                System.out.println(kmer);
+//                System.out.println(kmer);
 //                String kmer = "GTDHAQLQLVLQQQQPTTSDGLGVTSTSNS";
                 getContig(kmer);
                 done.add(kmer);

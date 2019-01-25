@@ -10,7 +10,7 @@ public class SeqContig {
 
     private Set<String> contigs;
     private Map<String, String> contigsMap;
-    private FuzzyHashMap contigsMapFuzzy= new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.FIRST_4,FuzzyHashMap.FUZZY_MATCHING_ALGORITHM.LEVENSHTEIN);
+    private FuzzyHashMap contigsMapFuzzy= new FuzzyHashMap(FuzzyHashMap.PRE_HASHING_METHOD.FIRST_5,FuzzyHashMap.FUZZY_MATCHING_ALGORITHM.LEVENSHTEIN);
     public Set<String> getContigs() {
         return contigs;
     }

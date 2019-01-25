@@ -32,7 +32,9 @@ public class contig {
         for (Map.Entry<String, String> entry : contigs.entrySet()) {
             tem.add(entry.getValue());
         }
-        System.out.println(String.valueOf(tem.size()));
+        System.out.print(String.valueOf(tem.size())+",");
+
+        System.out.println(String.valueOf(allSeq.size()));
 //        long endTime = System.currentTimeMillis();
 
 //        foo.printContigs();

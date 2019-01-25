@@ -15,30 +15,29 @@ public class StringMetrics {
 	        // convert letters to numeric code
 	        for (int i = 0; i < x.length; i++) {
 	            switch (x[i]) {
-	                case 'B':
-	                case 'F':
-	                case 'P':
-	                case 'V': { x[i] = '1'; break; }
-
-	                case 'C':
-	                case 'G':
-	                case 'J':
+	                case 'R':
 	                case 'K':
-	                case 'Q':
-	                case 'S':
-	                case 'X':
-	                case 'Z': { x[i] = '2'; break; }
-
 	                case 'D':
-	                case 'T': { x[i] = '3'; break; }
+	                case 'E': { x[i] = '1'; break; }
 
-	                case 'L': { x[i] = '4'; break; }
+	                case 'Q':
+	                case 'N':
+	                case 'H':
+	                case 'S':
+	                case 'T':
+	                case 'Y':
+	                case 'C':
+	                case 'W': { x[i] = '2'; break; }
 
-	                case 'M':
-	                case 'N': { x[i] = '5'; break; }
-
-	                case 'R': { x[i] = '6'; break; }
-
+	                case 'A':
+					case 'I':
+					case 'L':
+					case 'M':
+					case 'F':
+					case 'V':
+					case 'P':
+	                case 'G': { x[i] = '3'; break; }
+	                
 	                default:  { x[i] = '0'; break; }
 	            }
 	        }
