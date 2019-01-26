@@ -10,6 +10,7 @@ public class Index {
         int k = 1;
         int splitNum=1;
         int max=1;
+        String model = "AA";
 
         while (argIdx < args.length && args[argIdx].startsWith("-")) {
             String arg = args[argIdx++];
@@ -17,6 +18,8 @@ public class Index {
                 spePath = args[argIdx++];
             else if (arg.equals("-o"))
                 outPath = args[argIdx++];
+            else if (arg.equals("-d"))
+                model = args[argIdx++];
             else if (arg.equals("-k"))
                 k = Integer.parseInt(args[argIdx++]);
             else if (arg.equals("-m"))
@@ -31,7 +34,8 @@ public class Index {
                 spePath,
                 outPath,
                 splitNum,
-                max);
+                max,
+                model);
         foo.create();
         return true;
     }

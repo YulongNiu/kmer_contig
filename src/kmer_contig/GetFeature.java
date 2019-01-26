@@ -3,6 +3,7 @@ package kmer_contig;
 import io.FileInput;
 import io.FileOutput;
 import io.ParserSeq;
+import utils.TransAA;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,15 +19,18 @@ public class GetFeature {
     private Map<String,int[]> eachIndex;
     private int k;
     private int featureSize;
+    private String model;
 
     public GetFeature(String seqPath,
                       String indexPath,
                       String writeFeaturePath,
-                      int k){
+                      int k,
+                      String model){
         this.seqPath = seqPath;
         this.indexPath = indexPath;
         this.writeFeaturePath = writeFeaturePath;
         this.k = k;
+        this.model = model;
         File file = new File(this.indexPath);
         this.eachIndex = FileInput.readIndex(file.getAbsolutePath());
         for (Map.Entry<String, int[]> entry : eachIndex.entrySet()) {
@@ -57,7 +61,7 @@ public class GetFeature {
     }
 
     public void createContig(){
-        SeqContig foo = new SeqContig();
+        SeqContig foo = new SeqContig(this.model);
         foo.contigTable(this.seqPath,k);
         this.contigsMap = foo.getContigsMap();
     }
@@ -249,7 +253,12 @@ public class GetFeature {
         ParserSeq seq = new ParserSeq(this.seqPath);
         for (int i = 0; i < seq.size(); i++) {
             String seqName = seq.getDescription(i).substring(1);
-            String seqs = seq.getSequence(i);
+            String seqs=null;
+            if (model.equals("AA")){
+                seqs = seq.getSequence(i);
+            } else if (model.equals("HY")){
+                seqs = TransAA.tarnsToHY(seq.getSequence(i));
+            }
 //            Set<String> contigs = getKmers(seqs);
 
 //            for (String con:contigs){

@@ -10,6 +10,7 @@ public class Feature {
         String profile = null;
         int k = 1;
         int w =0;
+        String model ="AA";
 
         while (argIdx < args.length && args[argIdx].startsWith("-")) {
             String arg = args[argIdx++];
@@ -17,6 +18,8 @@ public class Feature {
                 spePath = args[argIdx++];
             else if (arg.equals("-o"))
                 outPath = args[argIdx++];
+            else if (arg.equals("-d"))
+                model = args[argIdx++];
             else if (arg.equals("-k"))
                 k = Integer.parseInt(args[argIdx++]);
             else if (arg.equals("-w"))
@@ -30,7 +33,8 @@ public class Feature {
         GetFeature foo = new GetFeature(spePath,
                 profile,
                 outPath,
-                k);
+                k,
+                model);
         foo.createContig();
         foo.eachContig(w);
         return true;

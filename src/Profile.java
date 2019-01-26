@@ -11,7 +11,7 @@ public class Profile {
         String speNamePath = null;
         int k = 1;
         int f = 0;
-
+        String model ="AA";
 
         while (argIdx < args.length && args[argIdx].startsWith("-")) {
             String arg = args[argIdx++];
@@ -21,6 +21,8 @@ public class Profile {
                 contigPath = args[argIdx++];
             else if (arg.equals("-o"))
                 outProfile = args[argIdx++];
+            else if (arg.equals("-d"))
+                model = args[argIdx++];
             else if (arg.equals("-n"))
                 speNamePath = args[argIdx++];
             else if (arg.equals("-k"))
@@ -33,7 +35,8 @@ public class Profile {
         }
         CreateSpeciesTable foo = new CreateSpeciesTable(contigPath,
                 spePath,
-                outProfile);
+                outProfile,
+                model);
         foo.createSpeEach(k,f);
         if (null != speNamePath)
             foo.writeSpeName(speNamePath);

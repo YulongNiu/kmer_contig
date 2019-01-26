@@ -2,6 +2,7 @@ package kmer_contig;
 
 import io.FileInput;
 import io.FileOutput;
+import utils.TransAA;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,34 +14,63 @@ public class CreateContigIndex {
     private int k;
     private int max;
     private int splitNum;
+    private String model;
+    private String [] s;
 
     public CreateContigIndex(int k,
                              String spePath,
                              String outFilePath,
                              int splitNum,
-                             int max){
+                             int max,
+                             String model){
         this.k = k;
         this.spePath = spePath;
         this.outFilePath = outFilePath;
         this.splitNum = splitNum;
         this.max = max;
-    }
+        this.model= model;
 
-    public void create() throws IOException {
-        String[] s = {"A", "C", "D", "E", "F",
-                "G", "H", "I", "K", "L",
-                "M", "N", "P", "Q", "R",
-                "S", "T", "V", "W", "Y"};
-        dbg foo = new dbg(k, s);
-        List<String> allSeq = new ArrayList<>();
-        File[] files = FileInput.getFiles(spePath);
-
-        for (int i = 0; i < max; i++) {
-            System.out.println(files[i].getName());
-            allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
-
+        if (model.equals("AA")){
+            this.s = new String[]{"A", "C", "D", "E", "F",
+                    "G", "H", "I", "K", "L",
+                    "M", "N", "P", "Q", "R",
+                    "S", "T", "V", "W", "Y"};
+        }else if (model.equals("HY")){
+            this.s = new String[]{"H","Y"};
         }
 
+    }
+
+    public List<String> readSeqs(){
+        List<String> allSeq = new ArrayList<>();
+        File[] files = FileInput.getFiles(spePath);
+        if (model.equals("AA")){
+            for (int i = 0; i < max; i++) {
+                System.out.println(files[i].getName());
+                allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
+            }
+
+        }
+        else if (model.equals("HY")){
+            for (int i = 0; i < max; i++) {
+                System.out.println(files[i].getName());
+                List<String> seqs = FileInput.read(files[i].getAbsolutePath());
+                for (String tem:seqs){
+                    allSeq.add(TransAA.tarnsToHY(tem));
+                }
+        }
+    }
+    return allSeq;
+    }
+
+
+
+
+    public void create() throws IOException {
+
+        dbg foo = new dbg(k, s);
+
+        List<String> allSeq = readSeqs();
         for (String tem : allSeq) {
             foo.getKmer(tem);
         }

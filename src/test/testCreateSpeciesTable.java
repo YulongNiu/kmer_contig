@@ -12,9 +12,10 @@ public class testCreateSpeciesTable {
 //        foo.readContig();
 //        foo.createSpe(6);
 //        foo.writeSpeTable("/home/yangfang/PPFeature/kmer_profile/test_java/spetable.txt");
-        CreateSpeciesTable foo = new CreateSpeciesTable("/home/yangfang/PPFeature/kmer_profile/contig_idx/idx_k30/",
-                "/home/yangfang/PPFeature/kmer_profile/abb_seqs_class/",
-                "/home/yangfang/PPFeature/kmer_profile/contig_idx/72speIdx_k30/");
-//        foo.createSpeEach(30,0);
+        CreateSpeciesTable foo = new CreateSpeciesTable("/home/yangfang/PPFeature/kmer_profile/test_hy/k15_hy_index/",
+                "/home/yangfang/PPFeature/kmer_profile/abb_seqs500/",
+                "/home/yangfang/PPFeature/kmer_profile/test_hy/k15_hy_profile/_",
+                "HY");
+        foo.createSpeEach(15,0);
     }
 }

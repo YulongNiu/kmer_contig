@@ -10,7 +10,8 @@ public class testCreateContigIndex {
                 "/home/yangfang/PPFeature/kmer_profile/test_create/",
                 "/home/yangfang/PPFeature/kmer_profile/out/idx3.txt",
                 3,
-                6);
+                6,
+                "AA");
         foo.create();
     }
 }

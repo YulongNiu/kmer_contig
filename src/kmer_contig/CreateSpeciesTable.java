@@ -20,14 +20,16 @@ public class CreateSpeciesTable {
     private Map<String, List<Integer>> contigTable;
     private FuzzyHashMap contigTableFuzzy;
     private List<String> speName = new ArrayList<>();
-
+    private String model;
     //    private SeqContig foo;
     public CreateSpeciesTable(String contigPath,
                               String speFilePath,
-                              String speContigIndexPath) {
+                              String speContigIndexPath,
+                              String model) {
         this.contigPath = contigPath;
         this.speFilePath = speFilePath;
         this.speContigIndexPath = speContigIndexPath;
+        this.model = model;
         File file = new File(speContigIndexPath);
         if (!file.isDirectory()) {
             file.mkdirs();
@@ -99,7 +101,7 @@ public class CreateSpeciesTable {
     public void createSpe(int k, int f) {
 
         File[] files = FileInput.getFiles(speFilePath);
-        SeqContig foo = new SeqContig();
+        SeqContig foo = new SeqContig(this.model);
         for (int i = 0; i < files.length; i++) {
             System.out.println(String.valueOf(i) + ": " + files[i].getName());
             String name = files[i].getName();
