@@ -24,8 +24,13 @@ public class SeqContig {
                     "S", "T", "V", "W", "Y"};
         } else if (model.equals("HY")) {
             this.s = new String[]{"H", "Y"};
+        } else if (model.equals("PO")) {
+            this.s = new String[]{"P", "O"};
+        } else if (model.equals("CH")) {
+            this.s = new String[]{"C", "H"};
+        } else if (model.equals("CHP")) {
+            this.s = new String[]{"C", "H", "P"};
         }
-
     }
 
 
@@ -52,6 +57,18 @@ public class SeqContig {
             for (String x : filelist) {
                 seqs.add(TransAA.tarnsToHY(x));
             }
+        }else if (model.equals("PO")) {
+            for (String x : filelist) {
+                seqs.add(TransAA.tarnsToPO(x));
+            }
+        }else if (model.equals("CH")) {
+            for (String x : filelist) {
+                seqs.add(TransAA.tarnsToCH(x));
+            }
+        }else if (model.equals("CHP")) {
+            for (String x : filelist) {
+                seqs.add(TransAA.tarnsToCHP(x));
+            }
         }
 
 
@@ -77,8 +94,6 @@ public class SeqContig {
         }
 
         this.contigs = tem;
-
-
 
 
         System.out.println(tem.size());

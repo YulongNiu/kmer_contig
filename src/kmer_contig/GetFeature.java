@@ -258,7 +258,14 @@ public class GetFeature {
                 seqs = seq.getSequence(i);
             } else if (model.equals("HY")){
                 seqs = TransAA.tarnsToHY(seq.getSequence(i));
+            }else if (model.equals("PO")){
+                seqs = TransAA.tarnsToPO(seq.getSequence(i));
+            }else if (model.equals("CH")){
+                seqs = TransAA.tarnsToCH(seq.getSequence(i));
+            }else if (model.equals("CHP")){
+                seqs = TransAA.tarnsToCHP(seq.getSequence(i));
             }
+
 //            Set<String> contigs = getKmers(seqs);
 
 //            for (String con:contigs){

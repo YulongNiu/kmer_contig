@@ -15,55 +15,82 @@ public class CreateContigIndex {
     private int max;
     private int splitNum;
     private String model;
-    private String [] s;
+    private String[] s;
 
     public CreateContigIndex(int k,
                              String spePath,
                              String outFilePath,
                              int splitNum,
                              int max,
-                             String model){
+                             String model) {
         this.k = k;
         this.spePath = spePath;
         this.outFilePath = outFilePath;
         this.splitNum = splitNum;
         this.max = max;
-        this.model= model;
+        this.model = model;
 
-        if (model.equals("AA")){
+        if (model.equals("AA")) {
             this.s = new String[]{"A", "C", "D", "E", "F",
                     "G", "H", "I", "K", "L",
                     "M", "N", "P", "Q", "R",
                     "S", "T", "V", "W", "Y"};
-        }else if (model.equals("HY")){
-            this.s = new String[]{"H","Y"};
+        } else if (model.equals("HY")) {
+            this.s = new String[]{"H", "Y"};
+        } else if (model.equals("PO")) {
+            this.s = new String[]{"P", "O"};
+        }else if (model.equals("CH")) {
+            this.s = new String[]{"C", "H"};
+        }else if (model.equals("CHP")) {
+            this.s = new String[]{"C", "H", "P"};
         }
-
     }
 
-    public List<String> readSeqs(){
+    public List<String> readSeqs() {
         List<String> allSeq = new ArrayList<>();
         File[] files = FileInput.getFiles(spePath);
-        if (model.equals("AA")){
+
+        if (model.equals("AA")) {
             for (int i = 0; i < max; i++) {
                 System.out.println(files[i].getName());
                 allSeq.addAll(FileInput.read(files[i].getAbsolutePath()));
             }
-
-        }
-        else if (model.equals("HY")){
+        } else if (model.equals("HY")) {
             for (int i = 0; i < max; i++) {
                 System.out.println(files[i].getName());
                 List<String> seqs = FileInput.read(files[i].getAbsolutePath());
-                for (String tem:seqs){
+                for (String tem : seqs) {
                     allSeq.add(TransAA.tarnsToHY(tem));
                 }
+            }
+        }else if (model.equals("PO")) {
+            for (int i = 0; i < max; i++) {
+                System.out.println(files[i].getName());
+                List<String> seqs = FileInput.read(files[i].getAbsolutePath());
+                for (String tem : seqs) {
+                    allSeq.add(TransAA.tarnsToPO(tem));
+                }
+            }
+        }else if (model.equals("CH")) {
+            for (int i = 0; i < max; i++) {
+                System.out.println(files[i].getName());
+                List<String> seqs = FileInput.read(files[i].getAbsolutePath());
+                for (String tem : seqs) {
+                    allSeq.add(TransAA.tarnsToCH(tem));
+                }
+            }
+        }else if (model.equals("CHP")) {
+            for (int i = 0; i < max; i++) {
+                System.out.println(files[i].getName());
+                List<String> seqs = FileInput.read(files[i].getAbsolutePath());
+                for (String tem : seqs) {
+                    allSeq.add(TransAA.tarnsToCHP(tem));
+                }
+            }
         }
-    }
-    return allSeq;
-    }
 
-
+        return allSeq;
+    }
 
 
     public void create() throws IOException {
@@ -76,7 +103,7 @@ public class CreateContigIndex {
         }
         Set<String> kmers = foo.getKmerSet();
 
-        System.out.println("Kmers: "+ String.valueOf(kmers.size()));
+        System.out.println("Kmers: " + String.valueOf(kmers.size()));
 
         long startTime = System.currentTimeMillis();
         foo.allContigs();
@@ -86,7 +113,7 @@ public class CreateContigIndex {
             tem.add(entry.getValue());
         }
         FileOutput write = new FileOutput(outFilePath);
-        write.writeContigSplit(tem,splitNum);
+        write.writeContigSplit(tem, splitNum);
         System.out.println("Contigs: " + String.valueOf(tem.size()));
 
         long endTime = System.currentTimeMillis();
