@@ -206,25 +206,38 @@ public class GetFeature {
                     count +=1;
             }
         }
+//        // combine feature
+//        if (!match.isEmpty()){
+//            for (int[] x:match){
+//                for (int i = 0; i < x.length; i++) {
+//                    arr[i] = arr[i] + x[i];
+//
+//                }
+//            }
+//        }
+
         // combine feature
         if (!match.isEmpty()){
-            for (int[] x:match){
-                for (int i = 0; i < x.length; i++) {
-                    arr[i] = arr[i] + x[i];
-
+            for (int i = 0; i < arr.length; i++) {
+                int[] tem = new int[match.size()];
+                for (int j = 0; j < match.size(); j++) {
+                    tem[j] = match.get(j)[i];
                 }
+                int res = this.count(tem);
+                arr[i] = res;
             }
         }
+
         //normal
         int weight = contigs.size() - count;
         float [] nor = new float[arr.length];
         for (int j = 0; j < arr.length; j++) {
-//            nor[j] = (float) arr[j] / weight;
-            if (weight - count >=0){
-                nor[j] = (float) 1;
-            }else {
-                nor[j] = (float) 0;
-            }
+            nor[j] = (float) arr[j] / contigs.size();
+//            if (weight - count >=0){
+//                nor[j] = (float) 1;
+//            }else {
+//                nor[j] = (float) 0;
+//            }
         }
 
 
@@ -281,11 +294,11 @@ public class GetFeature {
                 System.out.println(Arrays.toString(match));
             } else {
 
-                Set<String> contigs = matchContig(seqs);
-                int[] match = matchIndexTable(contigs);
+//                Set<String> contigs = matchContig(seqs);
+//                int[] match = matchIndexTable(contigs);
 
-//                List<String> contigs = matchContigOrder(seqs);
-//                int[] match = matchIndexTableOrder(contigs);
+                List<String> contigs = matchContigOrder(seqs);
+                int[] match = matchIndexTableOrder(contigs);
 
                 System.out.println(seqName + " contains: " + String.valueOf(contigs.size()) + " contigs");
                 this.feature.put(seqName,transArrToListInt(match));
